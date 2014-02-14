@@ -10,3 +10,4 @@ Description: A collection of function to valuate options, greeks, volatility, an
   kurtosis, volatility smile scenarios, P&L profiles, and other techniques are included.
 License: GPL-3
 Depends: fOptions
+URL: http://quant-lab.r-forge.r-project.org, http://quant-lab.com
