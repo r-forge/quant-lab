@@ -1,4 +1,4 @@
-# Options Calculations
+# Quant-lab functions
 
 {# Libraries
 
@@ -18,13 +18,14 @@ for(lib in libs) {
   }
 }
 
+rm(lib, libs)
 
 }
 
 
 {# Options
 
-options(stringsAsFactors = FALSE)
+#options(stringsAsFactors = FALSE)
 
 }
 
@@ -33,7 +34,17 @@ options(stringsAsFactors = FALSE)
 # setting b = r we get Black and Scholes' stock option model, b = r-q we get Merton's stock option
 # model with continuous dividend yield q, b = 0 we get Black's futures option model, and b = r-rf
 # we get Garman and Kohlhagen's currency option model with foreign interest rate rf
-GreeksBSM <- function(name="delta", type="p", S=100, K=98, T=0.25, r=0.05, b=0.02, vola=0.15) {
+GreeksBSM <- function(
+  name  = c("premium", "delta", "vega", "theta", "rho", "gamma", "vanna", "volga"),
+  type = c("c", "p"),
+  S = 0,
+  K = 0,
+  T = 0,
+  r = 0,
+  b = 0,
+  vola = 0
+)
+{
 
   c.type <- c("premium", "delta", "vega", "theta", "rho", "gamma", "vanna", "volga")
   
@@ -84,38 +95,32 @@ GreeksBSM <- function(name="delta", type="p", S=100, K=98, T=0.25, r=0.05, b=0.0
   if(name == "premium") {
     out <- i * (S * exp(-q*T) * pnorm(i*d1) - K * exp(-r*T) * pnorm(i*d2))
     return(list(err=0, value=out))
-    #GBSOption(TypeFlag=type, S=S, X=K, Time=T, r=r, b=b, sigma=vola)@price
   }
   
   if(name == "delta") {
     out <- i*exp(-q*T) * pnorm(i*d1)
     return(list(err=0, value=out))
-    #GBSGreeks(Selection="delta", TypeFlag=type, S=S, X=K, Time=T, r=r, b=b, sigma=vola)
   }
   
   if(name == "vega") {
     out <- S * exp(-q*T) * dnorm(d1) * sqrt(T)
     return(list(err=0, value=out))
-    #GBSGreeks(Selection="vega", TypeFlag=type, S=S, X=K, Time=T, r=r, b=b, sigma=vola)
   }
   
   if(name == "theta") {
     out <- -exp(-q*T) * S*dnorm(d1)*vola/(2*sqrt(T)) - i*r*K*exp(-r*T)*pnorm(i*d2) +
       i*q*S*exp(-q*T)*pnorm(i*d1)
     return(list(err=0, value=out))
-    #GBSGreeks(Selection="theta", TypeFlag=type, S=S, X=K, Time=T, r=r, b=b, sigma=vola)
   }
   
   if(name == "rho") {
     out <- i*K * T * exp(-r*T) * pnorm(i*d2)
     return(list(err=0, value=out))
-    #GBSGreeks(Selection="rho", TypeFlag=type, S=S, X=K, Time=T, r=r, b=b, sigma=vola)
   }
   
   if(name == "gamma") {
     out <- exp(-q*T) * dnorm(d1)/(S*vola*sqrt(T))
     return(list(err=0, value=out))
-    #GBSGreeks(Selection="gamma", TypeFlag=type, S=S, X=K, Time=T, r=r, b=b, sigma=vola)
   }
   
   if(name == "vanna") {
@@ -132,7 +137,15 @@ GreeksBSM <- function(name="delta", type="p", S=100, K=98, T=0.25, r=0.05, b=0.0
 
 
 # Calculates the strike price of an option with given values of the delta, underlying price, implied volatility,...
-StrikeDeltaConv <- function(delta=0.25, S=100, T=0.25, r=0, b=0, vola=0.1) {
+StrikeDeltaConv <- function(
+  delta = 0,
+  S = 0,
+  T = 0,
+  r = 0,
+  b = 0,
+  vola = 0
+)
+{
 
   q <- r - b
   
@@ -147,9 +160,21 @@ StrikeDeltaConv <- function(delta=0.25, S=100, T=0.25, r=0, b=0, vola=0.1) {
 }
 
 
-# The vanna-volga method to calculate implied volatility of a specified option
-VannaVolgaVol <- function(method="continuous", S=32440, K=34000, T=0.25, vol0=0.07527,
-  vola=data.frame(K=c(32000, 32500, 33000), v=c(0.0725, 0.0775, 0.083)), r=0, b=0, tol=1e-5) {
+# The vanna-volga method to calculate implied volatility of an option
+VannaVolgaVol <- function(
+  method = c("continuous", "discrete"),
+  S = 0,
+  K = 0,
+  T = 0,
+  vol0 = 0,
+  vola = data.frame(
+    K = c(0, 0, 0),
+    v = c(0, 0, 0)),
+  r = 0,
+  b = 0,
+  tol = 1e-5
+)
+{
   
   if(method == "continuous") {
   
@@ -179,8 +204,6 @@ VannaVolgaVol <- function(method="continuous", S=32440, K=34000, T=0.25, vol0=0.
     CF <- t(w) %*% matrix(B.cost, nrow = 3)
     
     vola <- GBSVolatility(price=TV.BS+CF, TypeFlag="c", S=S, X=K, Time=T, r=r, b=b, tol=tol)
-    #vola <- EuropeanOptionImpliedVolatility(type="call", value=TV.BS+CF, underlying=S, strike=K,
-    #  dividendYield=r-b, riskFreeRate=r, maturity=T, volatility=vol0)
     
     return(vola)
   
@@ -230,11 +253,15 @@ VannaVolgaVol <- function(method="continuous", S=32440, K=34000, T=0.25, vol0=0.
   
 }
 
-VannaVolgaVol.cmp <- compiler::cmpfun(VannaVolgaVol)
+#VannaVolgaVol.cmp <- compiler::cmpfun(VannaVolgaVol)
 
 
 # Spline function
-CutSplineFun <- function(xy=data.frame(x=NULL, y=NULL), x) {
+CutSplineFun <- function(
+  xy = data.frame(x = NULL, y = NULL),
+  x = NULL
+)
+{
   
   if(nrow(xy) == 0)
     return(0)
@@ -250,12 +277,23 @@ CutSplineFun <- function(xy=data.frame(x=NULL, y=NULL), x) {
 }
 
 
-# The profit & loss and Greeks of an option portfolio calculation using the vanna-volga method and 
+# The Profit & Loss and Greeks calculation of an option portfolio using the vanna-volga method and 
 # given volatility scenario
-PortfolioValue <- function(param="premium", S=33500, T=0.25, r=0, b=0, tol=1e-5,
-  vola.vv=c(ATM=NULL, RR25=NULL, BF25=NULL), vola.scen=list(ATM=data.frame(x=NULL, d=NULL),
-  RR25=data.frame(x=NULL, d=NULL), BF25=data.frame(x=NULL, d=NULL)), dS=S/1000,
-  port=data.frame(type=NULL, strike=NULL, vola=NULL, quant=NULL)) {
+PortfolioValue <- function(
+  param = c("premium", "delta", "vega", "theta", "gamma"),
+  S = 0,
+  T = 0,
+  r = 0,
+  b = 0,
+  tol = 1e-5,
+  vola.vv = c(ATM = NULL, RR25 = NULL, BF25 = NULL),
+  vola.scen = list(ATM=data.frame(x = NULL, d = NULL),
+  RR25 = data.frame(x = NULL, d = NULL),
+  BF25 = data.frame(x = NULL, d = NULL)),
+  dS = S/1000,
+  port = data.frame(type = NULL, strike = NULL, vola = NULL, quant = NULL)
+)
+{
 
   {# check input params
   
@@ -560,5 +598,3 @@ PortfolioValue <- function(param="premium", S=33500, T=0.25, r=0, b=0, tol=1e-5,
   }
 
 }
-
-
