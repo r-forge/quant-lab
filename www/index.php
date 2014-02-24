@@ -43,7 +43,90 @@ echo $contents; } ?>
 
 <!-- end of project description -->
 
-<p> No content added 1. </p>
+<table summary="Package fOptions summary">
+  <tbody>
+		<tr>
+			<td valign="top">
+				Version:</td>
+			<td>
+				1.0</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				Depends:</td>
+			<td>
+				<a href="http://cran.r-project.org/web/packages/fOptions/index.html">fOptions</a></td>
+    </tr>
+		<tr>
+			<td valign="top">
+				Published:</td>
+			<td>
+				2014-02-08</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				Author:</td>
+			<td>
+				Oleg Mubarakshin</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				Maintainer:</td>
+			<td>
+				Oleg Mubarakshin &lt;oleg.mubarakshin at gmail.com&gt;</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				License:</td>
+			<td>
+				<a href="http://cran.r-project.org/web/licenses/GPL-3" style="background-color: white; color: blue; background-position: initial initial; background-repeat: initial initial;">GPL-3</a></td>
+		</tr>
+		<tr>
+			<td valign="top">
+				URL:</td>
+			<td>
+				<a href="http://quant-lab.com/r.html"><font color="#0000ff"><span style="background-color: white;">http://quant-lab.c</span></font>om/R/</a></td>
+		</tr>
+	</tbody>
+</table>
+
+<h4 style="background-color: rgb(255, 255, 255); color: rgb(102, 102, 102); font-family: monospace;">
+	Downloads:</h4>
+
+<table summary="Package fOptions downloads">
+	<tbody>
+		<tr>
+			<td valign="top">
+				Reference&nbsp;manual:</td>
+			<td>
+				Currently not available</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				Package&nbsp;source:</td>
+			<td>
+				Currently not available</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				MacOS&nbsp;X&nbsp;binary:</td>
+			<td>
+				Currently not available</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				Windows&nbsp;binary:</td>
+			<td>
+				Currently not available</td>
+		</tr>
+		<tr>
+			<td valign="top">
+        R&nbsp;code:</td>
+      <td>
+				<a href="http://quant-lab.com/wp-content/uploads/2014/01/quant-lab_code.zip">quant-lab_code.zip</a></td>
+		</tr>
+	</tbody>
+</table>
 
 <p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
