@@ -85,7 +85,7 @@ echo $contents; } ?>
 			<td valign="top">
 				URL:</td>
 			<td>
-				<a href="http://quant-lab.com/r.html"><font color="#0000ff"><span style="background-color: white;">http://quant-lab.com/R/</a></td>
+				<a href="http://quant-lab.com/r.html">http://quant-lab.com/R/</a></td>
 		</tr>
 	</tbody>
 </table>
