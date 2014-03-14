@@ -122,6 +122,20 @@ echo $contents; } ?>
 	</tbody>
 </table>
 
+<h4 style="background-color: rgb(255, 255, 255); color: rgb(102, 102, 102); font-family: monospace;">
+	Install:</h4>
+
+<table summary="Package quantlab2 downloads">
+	<tbody>
+		<tr>
+			<td valign="top">
+				R&nbsp;install&nbsp;command:</td>
+			<td>
+				install.packages("quantlab2", repos="http://R-Forge.R-project.org")</td>
+		</tr>
+	</tbody>
+</table>
+
 <p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
 </body>
