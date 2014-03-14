@@ -43,7 +43,7 @@ echo $contents; } ?>
 
 <!-- end of project description -->
 
-<table summary="Package fOptions summary">
+<table summary="Package quantlab2 summary">
   <tbody>
 		<tr>
 			<td valign="top">
@@ -61,7 +61,7 @@ echo $contents; } ?>
 			<td valign="top">
 				Published:</td>
 			<td>
-				2014-02-08</td>
+				2014-03-13</td>
 		</tr>
 		<tr>
 			<td valign="top">
@@ -79,7 +79,7 @@ echo $contents; } ?>
 			<td valign="top">
 				License:</td>
 			<td>
-				<a href="http://cran.r-project.org/web/licenses/GPL-3" style="background-color: white; color: blue; background-position: initial initial; background-repeat: initial initial;">GPL-3</a></td>
+        <a href="http://cran.r-project.org/web/licenses/GPL-2">GPL-2</a> | <a href="http://cran.r-project.org/web/licenses/GPL-3">GPL-3</a> [expanded from: GPL (≥ 2)]</td>
 		</tr>
 		<tr>
 			<td valign="top">
@@ -93,7 +93,7 @@ echo $contents; } ?>
 <h4 style="background-color: rgb(255, 255, 255); color: rgb(102, 102, 102); font-family: monospace;">
 	Downloads:</h4>
 
-<table summary="Package fOptions downloads">
+<table summary="Package quantlab2 downloads">
 	<tbody>
 		<tr>
 			<td valign="top">
@@ -105,7 +105,7 @@ echo $contents; } ?>
 			<td valign="top">
 				Package&nbsp;source:</td>
 			<td>
-				Currently not available</td>
+        <a href="http://download.r-forge.r-project.org/src/contrib/quantlab2_1.0.tar.gz"> quantlab2_1.0.tar.gz </a></td>
 		</tr>
 		<tr>
 			<td valign="top">
@@ -117,13 +117,7 @@ echo $contents; } ?>
 			<td valign="top">
 				Windows&nbsp;binary:</td>
 			<td>
-				Currently not available</td>
-		</tr>
-		<tr>
-			<td valign="top">
-        R&nbsp;code:</td>
-      <td>
-				<a href="http://quant-lab.com/wp-content/uploads/2014/01/quant-lab_code.zip">quant-lab_code.zip</a></td>
+				<a href="http://download.r-forge.r-project.org/bin/windows/contrib/latest/quantlab2_1.0.zip"> quantlab2_1.0.zip </a></td>
 		</tr>
 	</tbody>
 </table>
