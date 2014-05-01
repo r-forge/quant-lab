@@ -12,8 +12,8 @@ Options Trading Framework
 \tabular{ll}{
 Package: \tab quantlab2\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2014-03-09\cr
+Version: \tab 1.1\cr
+Date: \tab 2014-05-01\cr
 License: \tab GPL (>= 2)\cr
 }
 

@@ -1,16 +1,19 @@
 # Quant-lab functions
 
-{# Libraries
+##### libraries #####
 
-libs <- c("fOptions")
+libs <- c("fOptions", "RPostgreSQL")
 
-for(lib in libs) {
-  if(require(lib, character.only=TRUE)){
+for(lib in libs)
+{
+  if(require(lib, character.only=TRUE))
+  {
     cat(lib, "is loaded correctly", "\n")
   } else {
     cat("trying to install", lib, "\n")
     install.packages(lib)
-    if(require(lib)){
+    if(require(lib))
+    {
       cat(lib, "is installed and loaded", "\n")
     } else {
       stop(paste("could not install", lib))
@@ -20,20 +23,23 @@ for(lib in libs) {
 
 rm(lib, libs)
 
-}
 
 
-{# Options
+##### options #####
 
 #options(stringsAsFactors = FALSE)
 
-}
 
+
+##### GreeksBSM #####
 
 # Function calculates option premium and sensitivities,
-# setting b = r we get Black and Scholes' stock option model, b = r-q we get Merton's stock option
-# model with continuous dividend yield q, b = 0 we get Black's futures option model, and b = r-rf
-# we get Garman and Kohlhagen's currency option model with foreign interest rate rf
+# setting b = r we get Black and Scholes' stock option model,
+# b = r-q we get Merton's stock option model with continuous dividend yield q,
+# b = 0 we get Black's futures option model,
+# and b = r-rf we get Garman and Kohlhagen's currency option model with 
+# foreign interest rate rf
+
 GreeksBSM <- function(
   name  = c("premium", "delta", "vega", "theta", "rho", "gamma", "vanna", "volga"),
   type = c("c", "p"),
@@ -136,7 +142,12 @@ GreeksBSM <- function(
 }
 
 
-# Calculates the strike price of an option with given values of the delta, underlying price, implied volatility,...
+
+##### StrikeDeltaConv #####
+
+# Calculates the strike price of an option with given values of the delta,
+# underlying price, implied volatility,...
+
 StrikeDeltaConv <- function(
   delta = 0,
   S = 0,
@@ -160,7 +171,11 @@ StrikeDeltaConv <- function(
 }
 
 
+
+##### VannaVolgaVol #####
+
 # The vanna-volga method to calculate implied volatility of an option
+
 VannaVolgaVol <- function(
   method = c("continuous", "discrete"),
   S = 0,
@@ -253,10 +268,12 @@ VannaVolgaVol <- function(
   
 }
 
-#VannaVolgaVol.cmp <- compiler::cmpfun(VannaVolgaVol)
 
+
+##### CutSplineFun #####
 
 # Spline function
+
 CutSplineFun <- function(
   xy = data.frame(x = NULL, y = NULL),
   x = NULL
@@ -277,8 +294,12 @@ CutSplineFun <- function(
 }
 
 
-# The Profit & Loss and Greeks calculation of an option portfolio using the vanna-volga method and 
-# given volatility scenario
+
+##### PortfolioValue #####
+
+# The Profit & Loss and Greeks calculation of an option portfolio using
+# the vanna-volga method and given volatility scenario
+
 PortfolioValue <- function(
   param = c("premium", "delta", "vega", "theta", "gamma"),
   S = 0,
@@ -598,3 +619,142 @@ PortfolioValue <- function(
   }
 
 }
+
+
+
+##### configPG #####
+
+configPG <- list(
+  user = "postgres",
+  password = "postgres",
+  dbname = "postgres",
+  host = "127.0.0.1",
+  port = 5432,
+  drv = "PostgreSQL"
+)
+
+# configPGAdmin <- list(
+#   user = "username_of_admin",
+#   password = "password_of_admin",
+#   dbname = "MY_DBNAME",
+#   host = "url_of_host",
+#   port = port_of_host,
+#   drv = "PostgreSQL"
+# )
+
+# configMySQL <- list(
+#   user = "username",
+#   password = "password",
+#   dbname = "MY_DBNAME",
+#   host = "MY_HOST_IP_ADDRESS",
+#   drv = "MySQL"
+# )
+
+# configWhse <- list(
+#   drv = JDBC("oracle.jdbc.OracleDriver", "/usr/lib/oracle/instantclient_11_2/ojdbc5.jar"),
+#   user = "username",
+#   password = "password",
+#   url =  "url"
+# )
+
+
+
+##### makeCxn #####
+
+# Make a connection to a database
+# This function abstracts the idea of a database connection, allowing variable
+# parameters depending on the type of database you're connecting to
+# @param config a named list of the configuration options for the database connection
+# @return a connection to the database defined in the config
+
+makeCxn <- function(config)
+{
+  
+  if(class(config[['drv']]) == "character")
+    config[['drv']] <- dbDriver(config[['drv']])
+  
+  do.call(dbConnect, config)
+  
+}
+
+
+
+##### fetchQuery #####
+
+# This function runs a query on a database, fetching the result if desired
+# The purpose of this function is to remove connection management from the querying process
+# @param query the query you want to make to the SQL connection you've specified
+# @param config a named list of the configuration options for the connection
+# @param n the number of rows to return, or -1 for all rows
+# @param verbose Should the queries be printed as they're made?
+# @param split Should the queries be split on semicolons, or run as a block?
+# @return A list of results if multiple queries, or a single result if one query.
+
+fetchQuery <- function(
+  query,
+  config = configPG,
+  split = FALSE,
+  verbose = TRUE,
+  n = -1
+)
+{
+  
+  res <- list()
+  cxn <- makeCxn(config)
+  t1 <- Sys.time()
+  queries <- query
+  
+  if(split == TRUE)
+    queries <- strsplit(query, ";", fixed = TRUE)[[1]] # Split the query into components
+  
+  for(item in queries) {
+    
+    if(verbose) {
+      cat(paste(item, '\n'))
+    }
+    
+    tmp <- try(dbSendQuery(cxn, item)) # send the query
+    
+    if ('try-error' %in% class(tmp)) {
+      res[[item]] <- dbGetException(cxn)
+      next
+    }
+    
+    type <- tolower(substring(gsub(" ", "", item), 0, 6)) # identify if select, insert, delete
+    
+    if (type == "select" | grepl("with..", type) | grepl('EXPLAI|explai', type) | !split) {
+      res[[item]] <- try(fetch(tmp, n))
+    } else {
+      res[[item]] <- dbGetRowsAffected(tmp)
+      cat(res[[item]])
+    }
+    
+    if (verbose) {
+      print(Sys.time() - t1)
+      if (!is.null(dim(res))) {
+        print(dim(res))
+      }
+    }
+    
+    dbClearResult(tmp)
+    
+  }
+  
+  dbDisconnect(cxn)
+  
+  if (length(res) == 1) {
+    res <- res[[1]]
+  }
+  
+  return(res)
+  
+}
+
+
+
+
+
+
+
+
+
