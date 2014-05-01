@@ -49,7 +49,7 @@ echo $contents; } ?>
 			<td valign="top">
 				Version:</td>
 			<td>
-				1.0</td>
+				1.1</td>
 		</tr>
 		<tr>
 			<td valign="top">
@@ -61,7 +61,7 @@ echo $contents; } ?>
 			<td valign="top">
 				Published:</td>
 			<td>
-				2014-03-13</td>
+				2014-05-01</td>
 		</tr>
 		<tr>
 			<td valign="top">
@@ -105,7 +105,7 @@ echo $contents; } ?>
 			<td valign="top">
 				Package&nbsp;source:</td>
 			<td>
-        <a href="http://download.r-forge.r-project.org/src/contrib/quantlab2_1.0.tar.gz"> quantlab2_1.0.tar.gz </a></td>
+        <a href="http://download.r-forge.r-project.org/src/contrib/quantlab2_1.1.tar.gz"> quantlab2_1.1.tar.gz </a></td>
 		</tr>
 		<tr>
 			<td valign="top">
@@ -117,7 +117,7 @@ echo $contents; } ?>
 			<td valign="top">
 				Windows&nbsp;binary:</td>
 			<td>
-				<a href="http://download.r-forge.r-project.org/bin/windows/contrib/latest/quantlab2_1.0.zip"> quantlab2_1.0.zip </a></td>
+				<a href="http://download.r-forge.r-project.org/bin/windows/contrib/latest/quantlab2_1.1.zip"> quantlab2_1.1.zip </a></td>
 		</tr>
 	</tbody>
 </table>
