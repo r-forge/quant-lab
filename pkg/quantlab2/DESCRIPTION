@@ -1,0 +1,11 @@
+Package: quantlab2
+Type: Package
+Title: Functions applied to options pricing
+Version: 1.0
+Date: 2014-11-30
+Author: Oleg Mubarakshin
+Maintainer: Oleg Mubarakshin <oleg.mubarakshin@gmail.com>
+Description: A collection of functions to valuate options, greeks, volatility, and other 
+  parameters used by traders. Vanna-Volga, realized and implied volatility, skewness, and 
+  kurtosis, volatility smile scenarios, and other techniques are included.
+License: GPL (>= 2)
