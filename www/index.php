@@ -43,7 +43,7 @@ echo $contents; } ?>
 
 <!-- end of project description -->
 
-<table summary="Package QUANTlab summary">
+<table summary="Package quantlab2 summary">
   <tbody>
 		<tr>
 			<td valign="top">
@@ -61,7 +61,7 @@ echo $contents; } ?>
 			<td valign="top">
 				Published:</td>
 			<td>
-				2014-05-01</td>
+				2014-11-30</td>
 		</tr>
 		<tr>
 			<td valign="top">
@@ -93,7 +93,7 @@ echo $contents; } ?>
 <h4 style="background-color: rgb(255, 255, 255); color: rgb(102, 102, 102); font-family: monospace;">
 	Downloads:</h4>
 
-<table summary="Package QUANTlab downloads">
+<table summary="Package quantlab2 downloads">
 	<tbody>
 		<tr>
 			<td valign="top">
@@ -105,7 +105,7 @@ echo $contents; } ?>
 			<td valign="top">
 				Package&nbsp;source:</td>
 			<td>
-        <a href="http://download.r-forge.r-project.org/src/contrib/QUANTlab_1.1.tar.gz"> QUANTlab_1.1.tar.gz </a></td>
+        <a href="http://download.r-forge.r-project.org/src/contrib/quantlab2_1.0.tar.gz"> quantlab2_1.0.tar.gz </a></td>
 		</tr>
 		<tr>
 			<td valign="top">
@@ -117,7 +117,7 @@ echo $contents; } ?>
 			<td valign="top">
 				Windows&nbsp;binary:</td>
 			<td>
-				<a href="http://download.r-forge.r-project.org/bin/windows/contrib/latest/QUANTlab_1.1.zip"> QUANTlab_1.1.zip </a></td>
+				<a href="http://download.r-forge.r-project.org/bin/windows/contrib/latest/quantlab2_1.0.zip"> quantlab2_1.0.zip </a></td>
 		</tr>
 	</tbody>
 </table>
@@ -125,13 +125,13 @@ echo $contents; } ?>
 <h4 style="background-color: rgb(255, 255, 255); color: rgb(102, 102, 102); font-family: monospace;">
 	Install:</h4>
 
-<table summary="Package QUANTlab downloads">
+<table summary="Package quantlab2 downloads">
 	<tbody>
 		<tr>
 			<td valign="top">
 				R&nbsp;install&nbsp;command:</td>
 			<td>
-				install.packages("QUANTlab", repos="http://R-Forge.R-project.org")</td>
+				install.packages("quantlab2", repos="http://R-Forge.R-project.org")</td>
 		</tr>
 	</tbody>
 </table>
